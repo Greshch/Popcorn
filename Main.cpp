@@ -164,10 +164,19 @@ void Draw_Frame(HDC hdc)
             k += 2;
         }
     }*/
-    int i, j;
+    int i, j, k = 1;
+    bool blue = false;
     for (i = 0; i < 14; i++)
+    {
         for (j = 0; j < 12; j++)
-            Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, true);
+            Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, blue);
+        if (i == k)
+        {
+            blue = blue == true ? false : true;
+            k += 2;
+        }
+    }
+        
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
