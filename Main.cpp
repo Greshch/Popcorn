@@ -141,8 +141,28 @@ void Draw_Brick(HDC hdc,int x, int y, bool is_blue)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    Draw_Brick(hdc, 8, 6, false);
-    Draw_Brick(hdc, 8, 6 + 8, true);
+    /*Draw_Brick(hdc, 8, 6, false);
+    Draw_Brick(hdc, 8, 6 + 8, true);*/
+    int left = 8;
+    int up = 6;
+    bool blue = false;
+    int k = 1;
+    for (size_t i = 0; i < 8; i++)
+    {
+        for (size_t j = 0; j < 12; j++)
+        {
+            Draw_Brick(hdc, left, up, blue);
+            left += Brick_Width + 1;
+        }
+        left = 8;
+        up += Brick_Height + 1;
+        if (i == k)
+        {
+            blue = blue == true ? false : true;
+            k += 2;
+        }
+    }
+    
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
