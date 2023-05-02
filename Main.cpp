@@ -11,6 +11,10 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+int const Global_Scale = 3;
+int const Brick_Width = 15;
+int const Brick_Height = 7;
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -115,13 +119,30 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 //--------------------------------------------------------------------------------------------------------------------
+void Draw_Brick(HDC hdc,int x, int y, bool is_blue)
+{//Вывод кирпича
+    HPEN hpen;
+    HBRUSH hbrush;
+    if (is_blue)
+    {
+        hpen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
+        hbrush = CreateSolidBrush(RGB(95, 252, 255));
+    }
+    else
+    {
+        hpen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
+        hbrush = CreateSolidBrush(RGB(246, 91, 255));
+    }
+    
+    SelectObject(hdc, hpen);
+    SelectObject(hdc, hbrush);
+    Rectangle(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale);
+}
+//--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    HPEN hpen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
-    SelectObject(hdc, hpen);
-    HBRUSH hbrush = CreateSolidBrush(RGB(246, 91, 255));
-    SelectObject(hdc, hbrush);
-    Rectangle(hdc, 8 * 3, 6 * 3, (8 + 15) * 3, (6 + 7) * 3);
+    Draw_Brick(hdc, 8, 6, false);
+    Draw_Brick(hdc, 8, 6 + 8, true);
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
