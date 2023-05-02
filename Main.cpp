@@ -117,7 +117,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-
+    HPEN hpen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
+    SelectObject(hdc, hpen);
+    HBRUSH hbrush = CreateSolidBrush(RGB(246, 91, 255));
+    SelectObject(hdc, hbrush);
+    Rectangle(hdc, 8 * 3, 6 * 3, (8 + 15) * 3, (6 + 7) * 3);
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
