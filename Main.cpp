@@ -14,6 +14,10 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 int const Global_Scale = 3;
 int const Brick_Width = 15;
 int const Brick_Height = 7;
+int const Cell_Width = 16;
+int const Cell_Height = 8;
+int const Level_X_Offset = 8;
+int const Level_Y_Offset = 6;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -141,15 +145,13 @@ void Draw_Brick(HDC hdc,int x, int y, bool is_blue)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    /*Draw_Brick(hdc, 8, 6, false);
-    Draw_Brick(hdc, 8, 6 + 8, true);*/
-    int left = 8;
+    /*int left = 8;
     int up = 6;
     bool blue = false;
     int k = 1;
-    for (size_t i = 0; i < 8; i++)
+    for (size_t i = 0; i < 12; i++)
     {
-        for (size_t j = 0; j < 12; j++)
+        for (size_t j = 0; j < 14; j++)
         {
             Draw_Brick(hdc, left, up, blue);
             left += Brick_Width + 1;
@@ -161,8 +163,11 @@ void Draw_Frame(HDC hdc)
             blue = blue == true ? false : true;
             k += 2;
         }
-    }
-    
+    }*/
+    int i, j;
+    for (i = 0; i < 14; i++)
+        for (j = 0; j < 12; j++)
+            Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, true);
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
