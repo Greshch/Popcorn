@@ -112,7 +112,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_POPCORN));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = CreateSolidBrush(RGB(0, 0, 0));
+    wcex.hbrBackground  = CreateSolidBrush(RGB(15, 63, 31));
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_POPCORN);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -122,8 +122,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //--------------------------------------------------------------------------------------------------------------------
 void Init()// настройка игры при старте
 {
-    Brick_Red_Pen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
-    Brick_Red_Brush = CreateSolidBrush(RGB(246, 91, 255));
+    Brick_Red_Pen = CreatePen(PS_SOLID, 0, RGB(255, 85, 85));
+    Brick_Red_Brush = CreateSolidBrush(RGB(255, 85, 85));
 
     Brick_Blue_Pen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
     Brick_Blue_Brush = CreateSolidBrush(RGB(95, 252, 255));
