@@ -19,7 +19,10 @@ int const Cell_Height = 8;
 int const Level_X_Offset = 8;
 int const Level_Y_Offset = 6;
 
-enum EBrick_Type
+HPEN Brick_Red_Pen, Brick_Blue_Pen;
+HBRUSH Brick_Red_Brush, Brick_Blue_Brush;
+
+enum EBrick_Type // proto 3
 {
     EBT_None,
     EBT_Red,
@@ -116,6 +119,15 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     return RegisterClassExW(&wcex);
 }
+//--------------------------------------------------------------------------------------------------------------------
+void Init()// настройка игры при старте
+{
+    Brick_Red_Pen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
+    Brick_Red_Brush = CreateSolidBrush(RGB(246, 91, 255));
+
+    Brick_Blue_Pen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
+    Brick_Blue_Brush = CreateSolidBrush(RGB(95, 252, 255));
+}
 //
 //   FUNCTION: InitInstance(HINSTANCE, int)
 //
@@ -130,6 +142,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
+
+   Init();
 
    RECT window_rect;
    window_rect.left = 0;
@@ -155,19 +169,24 @@ void Draw_Brick(HDC hdc,int x, int y, EBrick_Type brick_type)
     HPEN hpen;
     HBRUSH hbrush;
 
+    /*HPEN Brick_Red_Pen, Brick_Blue_Pen;
+    HBRUSH Brick_Red_Brush, Brick_Blue_Brush;*/
+
+    
+
     switch (brick_type)
     {
     case EBT_None:
         return;
 
     case EBT_Blue: // blue
-        hpen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
-        hbrush = CreateSolidBrush(RGB(246, 91, 255));
+        hpen = Brick_Blue_Pen;
+        hbrush = Brick_Blue_Brush;
         break;
 
     case EBT_Red: // violet
-        hpen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
-        hbrush = CreateSolidBrush(RGB(95, 252, 255));
+        hpen = Brick_Red_Pen;
+        hbrush = Brick_Red_Brush;
         break;
 
     default:
