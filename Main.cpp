@@ -11,13 +11,40 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
-int const Global_Scale = 3;
+int const Global_Scale = 3;// proto 2
 int const Brick_Width = 15;
 int const Brick_Height = 7;
 int const Cell_Width = 16;
 int const Cell_Height = 8;
 int const Level_X_Offset = 8;
 int const Level_Y_Offset = 6;
+
+enum EBrick_Type
+{
+    EBT_None,
+    EBT_Red,
+    EBT_Blue
+};
+
+char Level_01[14][12] = // proto 3
+{
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
+
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -123,19 +150,28 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Draw_Brick(HDC hdc,int x, int y, bool is_blue)
+void Draw_Brick(HDC hdc,int x, int y, EBrick_Type brick_type)
 {//Вывод кирпича
     HPEN hpen;
     HBRUSH hbrush;
-    if (is_blue)
+
+    switch (brick_type)
     {
-        hpen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
-        hbrush = CreateSolidBrush(RGB(95, 252, 255));
-    }
-    else
-    {
+    case EBT_None:
+        return;
+
+    case EBT_Blue: // blue
         hpen = CreatePen(PS_SOLID, 0, RGB(246, 91, 255));
         hbrush = CreateSolidBrush(RGB(246, 91, 255));
+        break;
+
+    case EBT_Red: // violet
+        hpen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
+        hbrush = CreateSolidBrush(RGB(95, 252, 255));
+        break;
+
+    default:
+        return;
     }
     
     SelectObject(hdc, hpen);
@@ -145,35 +181,13 @@ void Draw_Brick(HDC hdc,int x, int y, bool is_blue)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    /*int left = 8;
-    int up = 6;
-    bool blue = false;
-    int k = 1;
-    for (size_t i = 0; i < 12; i++)
-    {
-        for (size_t j = 0; j < 14; j++)
-        {
-            Draw_Brick(hdc, left, up, blue);
-            left += Brick_Width + 1;
-        }
-        left = 8;
-        up += Brick_Height + 1;
-        if (i == k)
-        {
-            blue = blue == true ? false : true;
-            k += 2;
-        }
-    }*/
-    int i, j, k = 1;
+    int i, j;
     bool blue = false;
     for (i = 0; i < 14; i++)
     {
         for (j = 0; j < 12; j++)
-            Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, blue);
-        if (i == k)
         {
-            blue = blue == true ? false : true;
-            k += 2;
+            Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, (EBrick_Type)Level_01[i][j]);
         }
     }
         
