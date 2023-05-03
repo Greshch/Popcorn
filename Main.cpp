@@ -176,11 +176,11 @@ void Draw_Brick(HDC hdc,int x, int y, EBrick_Type brick_type)
     
     SelectObject(hdc, hpen);
     SelectObject(hdc, hbrush);
-    Rectangle(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale);
+    RoundRect(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale, 2 * Global_Scale, 2 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Draw_Frame(HDC hdc)
-{//Отрисовка экрана игры
+void Draw_Level(HDC hdc)
+{//Отрисовка кирпичей(стены)
     int i, j;
     bool blue = false;
     for (i = 0; i < 14; i++)
@@ -190,7 +190,11 @@ void Draw_Frame(HDC hdc)
             Draw_Brick(hdc, Level_X_Offset + j * Cell_Width, Level_Y_Offset + i * Cell_Height, (EBrick_Type)Level_01[i][j]);
         }
     }
-        
+}
+//--------------------------------------------------------------------------------------------------------------------
+void Draw_Frame(HDC hdc)
+{//Отрисовка экрана игры
+    Draw_Level(hdc);
 }
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
