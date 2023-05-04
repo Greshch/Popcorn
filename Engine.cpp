@@ -14,6 +14,7 @@ HPEN Brick_Red_Pen, Brick_Blue_Pen;
 HBRUSH Brick_Red_Brush, Brick_Blue_Brush;
 HPEN Platform_Circle_Pen, Platform_Inner_Pen;
 HBRUSH Platform_Circle_Brush, Platform_Inner_Brush;
+HPEN Platform_Highlight_Pen;
 
 enum EBrick_Type // proto 3
 {
@@ -52,6 +53,8 @@ void Init()// настройка игры при старте
     Create_Pen_Brush(95, 252, 255, Brick_Blue_Pen, Brick_Blue_Brush);
     Create_Pen_Brush(151, 0, 0, Platform_Circle_Pen, Platform_Circle_Brush);
     Create_Pen_Brush(0, 128, 192, Platform_Inner_Pen, Platform_Inner_Brush);
+
+    Platform_Highlight_Pen = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
@@ -106,6 +109,10 @@ void Draw_Platformer(HDC hdc, int x, int y)
     SelectObject(hdc, Platform_Inner_Brush);
     SelectObject(hdc, Platform_Inner_Pen);
     RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);
+
+    SelectObject(hdc, Platform_Highlight_Pen);
+    Arc(hdc, (x + 1) * Global_Scale, (y + 1) * Global_Scale, (x + Circle_Size - 1) * Global_Scale, (y + Circle_Size - 1) * Global_Scale,
+        (x + 1 + 1) * Global_Scale, (y + 1) * Global_Scale, (x + 1) * Global_Scale, (y + 1 + 2) * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
