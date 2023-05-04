@@ -39,32 +39,25 @@ char Level_01[14][12] = // proto 3
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-
+//--------------------------------------------------------------------------------------------------------------------
+void Create_Pen_Brush(unsigned char r, unsigned char g, unsigned char b, HPEN& pen, HBRUSH& brush)// настройка игры при старте
+{
+    pen = CreatePen(PS_SOLID, 0, RGB(r, g, b));
+    brush = CreateSolidBrush(RGB(r, g, b));
+}
 //--------------------------------------------------------------------------------------------------------------------
 void Init()// настройка игры при старте
 {
-    Brick_Red_Pen = CreatePen(PS_SOLID, 0, RGB(255, 85, 85));
-    Brick_Red_Brush = CreateSolidBrush(RGB(255, 85, 85));
-
-    Brick_Blue_Pen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
-    Brick_Blue_Brush = CreateSolidBrush(RGB(95, 252, 255));
-
-    Platform_Circle_Pen = CreatePen(PS_SOLID, 0, RGB(151, 0, 0));
-    Platform_Circle_Brush = CreateSolidBrush(RGB(151, 0, 0));
-
-    Platform_Inner_Pen = CreatePen(PS_SOLID, 0, RGB(0, 128, 192));
-    Platform_Inner_Brush = CreateSolidBrush(RGB(0, 128, 192));
+    Create_Pen_Brush(255, 85, 85, Brick_Red_Pen, Brick_Red_Brush);
+    Create_Pen_Brush(95, 252, 255, Brick_Blue_Pen, Brick_Blue_Brush);
+    Create_Pen_Brush(151, 0, 0, Platform_Circle_Pen, Platform_Circle_Brush);
+    Create_Pen_Brush(0, 128, 192, Platform_Inner_Pen, Platform_Inner_Brush);
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
 {//Вывод кирпича
     HPEN hpen;
     HBRUSH hbrush;
-
-    /*HPEN Brick_Red_Pen, Brick_Blue_Pen;
-    HBRUSH Brick_Red_Brush, Platform_Circle_Pen;*/
-
-
 
     switch (brick_type)
     {
