@@ -101,18 +101,21 @@ void Draw_Level(HDC hdc)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Platformer(HDC hdc, int x, int y)
 {//Отрисовка платформы
+    // 1. Рисуем ллевый и правый шар
     SelectObject(hdc, Platform_Circle_Brush);
     SelectObject(hdc, Platform_Circle_Pen);
     Ellipse(hdc, x * Global_Scale, y * Global_Scale, (x + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
     Ellipse(hdc, (x + Inner_Width) * Global_Scale, y * Global_Scale, (x + Inner_Width + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
-
+    // 2. Рисуем блик
+    SelectObject(hdc, Platform_Highlight_Pen);
+    Arc(hdc, (x + 1) * Global_Scale, (y + 1) * Global_Scale, (x + Circle_Size - 1) * Global_Scale, (y + Circle_Size - 1) * Global_Scale,
+        (x + 1 + 1) * Global_Scale, (y + 1) * Global_Scale, (x + 1) * Global_Scale, (y + 1 + 2) * Global_Scale);
+    // 3. Рисуем внутреннюю часть
     SelectObject(hdc, Platform_Inner_Brush);
     SelectObject(hdc, Platform_Inner_Pen);
     RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);
 
-    SelectObject(hdc, Platform_Highlight_Pen);
-    Arc(hdc, (x + 1) * Global_Scale, (y + 1) * Global_Scale, (x + Circle_Size - 1) * Global_Scale, (y + Circle_Size - 1) * Global_Scale,
-        (x + 1 + 1) * Global_Scale, (y + 1) * Global_Scale, (x + 1) * Global_Scale, (y + 1 + 2) * Global_Scale);
+   
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
