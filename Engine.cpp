@@ -1,4 +1,4 @@
-#include "Engine.h"
+п»ї#include "Engine.h"
 
 int const Global_Scale = 3;// proto 2
 int const Brick_Width = 15;
@@ -41,13 +41,13 @@ char Level_01[14][12] = // proto 3
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 //--------------------------------------------------------------------------------------------------------------------
-void Create_Pen_Brush(unsigned char r, unsigned char g, unsigned char b, HPEN& pen, HBRUSH& brush)// настройка игры при старте
+void Create_Pen_Brush(unsigned char r, unsigned char g, unsigned char b, HPEN& pen, HBRUSH& brush)// РЅР°СЃС‚СЂРѕР№РєР° РёРіСЂС‹ РїСЂРё СЃС‚Р°СЂС‚Рµ
 {
     pen = CreatePen(PS_SOLID, 0, RGB(r, g, b));
     brush = CreateSolidBrush(RGB(r, g, b));
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Init()// настройка игры при старте
+void Init()// РЅР°СЃС‚СЂРѕР№РєР° РёРіСЂС‹ РїСЂРё СЃС‚Р°СЂС‚Рµ
 {
     Create_Pen_Brush(255, 85, 85, Brick_Red_Pen, Brick_Red_Brush);
     Create_Pen_Brush(95, 252, 255, Brick_Blue_Pen, Brick_Blue_Brush);
@@ -58,7 +58,7 @@ void Init()// настройка игры при старте
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
-{//Вывод кирпича
+{//Р’С‹РІРѕРґ РєРёСЂРїРёС‡Р°
     HPEN hpen;
     HBRUSH hbrush;
 
@@ -87,7 +87,7 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Level(HDC hdc)
-{//Отрисовка кирпичей(стены)
+{//РћС‚СЂРёСЃРѕРІРєР° РєРёСЂРїРёС‡РµР№(СЃС‚РµРЅС‹)
     int i, j;
     bool blue = false;
     for (i = 0; i < 14; i++)
@@ -100,24 +100,24 @@ void Draw_Level(HDC hdc)
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Platformer(HDC hdc, int x, int y)
-{//Отрисовка платформы
-    // 1. Рисуем ллевый и правый шар
+{//РћС‚СЂРёСЃРѕРІРєР° РїР»Р°С‚С„РѕСЂРјС‹
+    // 1. Р РёСЃСѓРµРј Р»Р»РµРІС‹Р№ Рё РїСЂР°РІС‹Р№ С€Р°СЂ
     SelectObject(hdc, Platform_Circle_Brush);
     SelectObject(hdc, Platform_Circle_Pen);
     Ellipse(hdc, x * Global_Scale, y * Global_Scale, (x + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
     Ellipse(hdc, (x + Inner_Width) * Global_Scale, y * Global_Scale, (x + Inner_Width + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
-    // 2. Рисуем блик
+    // 2. Р РёСЃСѓРµРј Р±Р»РёРє
     SelectObject(hdc, Platform_Highlight_Pen);
     Arc(hdc, (x + 1) * Global_Scale, (y + 1) * Global_Scale, (x + Circle_Size - 1) * Global_Scale, (y + Circle_Size - 1) * Global_Scale,
         (x + 1 + 1) * Global_Scale, (y + 1) * Global_Scale, (x + 1) * Global_Scale, (y + 1 + 2) * Global_Scale);
-    // 3. Рисуем внутреннюю часть
+    // 3. Р РёСЃСѓРµРј РІРЅСѓС‚СЂРµРЅРЅСЋСЋ С‡Р°СЃС‚СЊ
     SelectObject(hdc, Platform_Inner_Brush);
     SelectObject(hdc, Platform_Inner_Pen);
     RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);   
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
-{//Отрисовка экрана игры
+{//РћС‚СЂРёСЃРѕРІРєР° СЌРєСЂР°РЅР° РёРіСЂС‹
     Draw_Level(hdc);
     Draw_Platformer(hdc, 50, 100);
 }
