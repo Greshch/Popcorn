@@ -7,6 +7,8 @@ int const Cell_Width = 16;
 int const Cell_Height = 8;
 int const Level_X_Offset = 8;
 int const Level_Y_Offset = 6;
+int const Circle_Size = 7;
+int Inner_Width = 21;
 
 HPEN Brick_Red_Pen, Brick_Blue_Pen;
 HBRUSH Brick_Red_Brush, Brick_Blue_Brush;
@@ -93,7 +95,20 @@ void Draw_Level(HDC hdc)
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
+void Draw_Platformer(HDC hdc, int x, int y)
+{//Отрисовка платформы
+    SelectObject(hdc, Brick_Red_Brush);
+    SelectObject(hdc, Brick_Red_Pen);
+    Ellipse(hdc, x * Global_Scale, y * Global_Scale, (x + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
+    Ellipse(hdc, (x + Inner_Width) * Global_Scale, y * Global_Scale, (x + Inner_Width + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
+
+    SelectObject(hdc, Brick_Blue_Brush);
+    SelectObject(hdc, Brick_Blue_Pen);
+    RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);
+}
+//--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    Draw_Level(hdc);
+    //Draw_Level(hdc);
+    Draw_Platformer(hdc, 50, 100);
 }
