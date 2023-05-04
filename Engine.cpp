@@ -12,6 +12,8 @@ int Inner_Width = 21;
 
 HPEN Brick_Red_Pen, Brick_Blue_Pen;
 HBRUSH Brick_Red_Brush, Brick_Blue_Brush;
+HPEN Platform_Circle_Pen, Platform_Inner_Pen;
+HBRUSH Platform_Circle_Brush, Platform_Inner_Brush;
 
 enum EBrick_Type // proto 3
 {
@@ -46,6 +48,12 @@ void Init()// настройка игры при старте
 
     Brick_Blue_Pen = CreatePen(PS_SOLID, 0, RGB(95, 252, 255));
     Brick_Blue_Brush = CreateSolidBrush(RGB(95, 252, 255));
+
+    Platform_Circle_Pen = CreatePen(PS_SOLID, 0, RGB(151, 0, 0));
+    Platform_Circle_Brush = CreateSolidBrush(RGB(151, 0, 0));
+
+    Platform_Inner_Pen = CreatePen(PS_SOLID, 0, RGB(0, 128, 192));
+    Platform_Inner_Brush = CreateSolidBrush(RGB(0, 128, 192));
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
@@ -54,7 +62,7 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
     HBRUSH hbrush;
 
     /*HPEN Brick_Red_Pen, Brick_Blue_Pen;
-    HBRUSH Brick_Red_Brush, Brick_Blue_Brush;*/
+    HBRUSH Brick_Red_Brush, Platform_Circle_Pen;*/
 
 
 
@@ -97,18 +105,18 @@ void Draw_Level(HDC hdc)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Platformer(HDC hdc, int x, int y)
 {//Отрисовка платформы
-    SelectObject(hdc, Brick_Red_Brush);
-    SelectObject(hdc, Brick_Red_Pen);
+    SelectObject(hdc, Platform_Circle_Brush);
+    SelectObject(hdc, Platform_Circle_Pen);
     Ellipse(hdc, x * Global_Scale, y * Global_Scale, (x + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
     Ellipse(hdc, (x + Inner_Width) * Global_Scale, y * Global_Scale, (x + Inner_Width + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
 
-    SelectObject(hdc, Brick_Blue_Brush);
-    SelectObject(hdc, Brick_Blue_Pen);
+    SelectObject(hdc, Platform_Inner_Brush);
+    SelectObject(hdc, Platform_Inner_Pen);
     RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    //Draw_Level(hdc);
+    Draw_Level(hdc);
     Draw_Platformer(hdc, 50, 100);
 }
