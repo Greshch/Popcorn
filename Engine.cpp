@@ -113,9 +113,7 @@ void Draw_Platformer(HDC hdc, int x, int y)
     // 3. Рисуем внутреннюю часть
     SelectObject(hdc, Platform_Inner_Brush);
     SelectObject(hdc, Platform_Inner_Pen);
-    RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);
-
-   
+    RoundRect(hdc, (x + 4) * Global_Scale, (y + 1) * Global_Scale, (x + 4 + Inner_Width - 1) * Global_Scale, (y + 1 + 5) * Global_Scale, 3 * Global_Scale, 3 * Global_Scale);   
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
