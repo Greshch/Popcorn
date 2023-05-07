@@ -92,21 +92,22 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
 void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step)
 {// Вывод падающнго кирпича
     double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
+    float brick_half_height = (FLOAT)Brick_Height * Global_Scale / 2.0;
 
     SetGraphicsMode(hdc, GM_ADVANCED);
     XFORM xform, old_form;
     GetWorldTransform(hdc, &old_form);
-    xform.eM11 = (FLOAT)cos(rotation_angle);
-    xform.eM12 = (FLOAT)sin(rotation_angle);
-    xform.eM21 = -(FLOAT)sin(rotation_angle);
+    xform.eM11 = 1.0f;
+    xform.eM12 = 0.0f;
+    xform.eM21 = 0.0f;
     xform.eM22 = (FLOAT)cos(rotation_angle);
     xform.eDx = (FLOAT)x;
-    xform.eDy = (FLOAT)y;
+    xform.eDy = (FLOAT)y + brick_half_height;
     SetWorldTransform(hdc, &xform);
 
     SelectObject(hdc, Brick_Blue_Pen);
     SelectObject(hdc, Brick_Blue_Brush);
-    Rectangle(hdc, 0, 0, 15 * Global_Scale, 7 * Global_Scale);
+    Rectangle(hdc, 0, 0 - brick_half_height, Brick_Width * Global_Scale, brick_half_height);
     SetWorldTransform(hdc, &old_form);
 }
 //--------------------------------------------------------------------------------------------------------------------
