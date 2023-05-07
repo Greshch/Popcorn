@@ -120,7 +120,7 @@ void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
     /*Draw_Level(hdc);
     Draw_Platformer(hdc, 50, 100);*/
-    /*SetGraphicsMode(hdc, GM_ADVANCED);
+    SetGraphicsMode(hdc, GM_ADVANCED);
     XFORM xform, old_form;
     GetWorldTransform(hdc, &old_form);
     xform.eM11 =(FLOAT) 0.8660;
@@ -129,10 +129,10 @@ void Draw_Frame(HDC hdc)
     xform.eM22 =(FLOAT) 0.8660;
     xform.eDx = (FLOAT) 100.0;
     xform.eDy = (FLOAT) 100.0;
-    SetWorldTransform(hdc, &xform);*/
+    SetWorldTransform(hdc, &xform);
 
     SelectObject(hdc, Brick_Blue_Pen);
     SelectObject(hdc, Brick_Blue_Brush);
-    Rectangle(hdc, 20 * Global_Scale, 100 * Global_Scale, (20 + 15) * Global_Scale, (100 + 7) * Global_Scale);
-    //SetWorldTransform(hdc, &old_form);
+    Rectangle(hdc, 0, 0, 15 * Global_Scale, 7 * Global_Scale);
+    SetWorldTransform(hdc, &old_form);
 }
