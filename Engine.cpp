@@ -118,6 +118,21 @@ void Draw_Platformer(HDC hdc, int x, int y)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
-    Draw_Level(hdc);
-    Draw_Platformer(hdc, 50, 100);
+    /*Draw_Level(hdc);
+    Draw_Platformer(hdc, 50, 100);*/
+    /*SetGraphicsMode(hdc, GM_ADVANCED);
+    XFORM xform, old_form;
+    GetWorldTransform(hdc, &old_form);
+    xform.eM11 =(FLOAT) 0.8660;
+    xform.eM12 =(FLOAT) 0.5000;
+    xform.eM21 =(FLOAT)-0.5000;
+    xform.eM22 =(FLOAT) 0.8660;
+    xform.eDx = (FLOAT) 100.0;
+    xform.eDy = (FLOAT) 100.0;
+    SetWorldTransform(hdc, &xform);*/
+
+    SelectObject(hdc, Brick_Blue_Pen);
+    SelectObject(hdc, Brick_Blue_Brush);
+    Rectangle(hdc, 20 * Global_Scale, 100 * Global_Scale, (20 + 15) * Global_Scale, (100 + 7) * Global_Scale);
+    //SetWorldTransform(hdc, &old_form);
 }
