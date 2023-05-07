@@ -1,5 +1,8 @@
 ﻿#include "Engine.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 int const Global_Scale = 3;// proto 2
 int const Brick_Width = 15;
 int const Brick_Height = 7;
@@ -86,16 +89,18 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
     RoundRect(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale, 2 * Global_Scale, 2 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Draw_Brick_Letter(HDC hdc)
+void Draw_Brick_Letter(HDC hdc, int rotation_step)
 {// Вывод падающнго кирпича
+    double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
+
     SetGraphicsMode(hdc, GM_ADVANCED);
     XFORM xform, old_form;
     GetWorldTransform(hdc, &old_form);
-    xform.eM11 = (FLOAT)0.8660;
-    xform.eM12 = (FLOAT)0.5000;
-    xform.eM21 = (FLOAT)-0.5000;
-    xform.eM22 = (FLOAT)0.8660;
-    xform.eDx = (FLOAT)400.0;
+    xform.eM11 = (FLOAT)cos(rotation_angle);
+    xform.eM12 = (FLOAT)sin(rotation_angle);
+    xform.eM21 = -(FLOAT)sin(rotation_angle);
+    xform.eM22 = (FLOAT)cos(rotation_angle);
+    xform.eDx = (FLOAT)100.0;
     xform.eDy = (FLOAT)100.0;
     SetWorldTransform(hdc, &xform);
 
@@ -139,5 +144,9 @@ void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
     /*Draw_Level(hdc);
     Draw_Platformer(hdc, 50, 100);*/
-    Draw_Brick_Letter(hdc);
+    for (size_t i = 0; i < 16; i++)
+    {
+        Draw_Brick_Letter(hdc, i);
+    }
+    
 }
