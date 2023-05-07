@@ -86,6 +86,25 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
     RoundRect(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale, 2 * Global_Scale, 2 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
+void Draw_Brick_Letter(HDC hdc)
+{// Вывод падающнго кирпича
+    SetGraphicsMode(hdc, GM_ADVANCED);
+    XFORM xform, old_form;
+    GetWorldTransform(hdc, &old_form);
+    xform.eM11 = (FLOAT)0.8660;
+    xform.eM12 = (FLOAT)0.5000;
+    xform.eM21 = (FLOAT)-0.5000;
+    xform.eM22 = (FLOAT)0.8660;
+    xform.eDx = (FLOAT)400.0;
+    xform.eDy = (FLOAT)100.0;
+    SetWorldTransform(hdc, &xform);
+
+    SelectObject(hdc, Brick_Blue_Pen);
+    SelectObject(hdc, Brick_Blue_Brush);
+    Rectangle(hdc, 0, 0, 15 * Global_Scale, 7 * Global_Scale);
+    SetWorldTransform(hdc, &old_form);
+}
+//--------------------------------------------------------------------------------------------------------------------
 void Draw_Level(HDC hdc)
 {//Отрисовка кирпичей(стены)
     int i, j;
@@ -120,19 +139,5 @@ void Draw_Frame(HDC hdc)
 {//Отрисовка экрана игры
     /*Draw_Level(hdc);
     Draw_Platformer(hdc, 50, 100);*/
-    SetGraphicsMode(hdc, GM_ADVANCED);
-    XFORM xform, old_form;
-    GetWorldTransform(hdc, &old_form);
-    xform.eM11 =(FLOAT) 0.8660;
-    xform.eM12 =(FLOAT) 0.5000;
-    xform.eM21 =(FLOAT)-0.5000;
-    xform.eM22 =(FLOAT) 0.8660;
-    xform.eDx = (FLOAT) 100.0;
-    xform.eDy = (FLOAT) 100.0;
-    SetWorldTransform(hdc, &xform);
-
-    SelectObject(hdc, Brick_Blue_Pen);
-    SelectObject(hdc, Brick_Blue_Brush);
-    Rectangle(hdc, 0, 0, 15 * Global_Scale, 7 * Global_Scale);
-    SetWorldTransform(hdc, &old_form);
+    Draw_Brick_Letter(hdc);
 }
