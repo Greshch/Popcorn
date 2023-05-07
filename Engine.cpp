@@ -89,7 +89,7 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
     RoundRect(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale, 2 * Global_Scale, 2 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Draw_Brick_Letter(HDC hdc, int rotation_step)
+void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step)
 {// Вывод падающнго кирпича
     double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
 
@@ -100,8 +100,8 @@ void Draw_Brick_Letter(HDC hdc, int rotation_step)
     xform.eM12 = (FLOAT)sin(rotation_angle);
     xform.eM21 = -(FLOAT)sin(rotation_angle);
     xform.eM22 = (FLOAT)cos(rotation_angle);
-    xform.eDx = (FLOAT)100.0;
-    xform.eDy = (FLOAT)100.0;
+    xform.eDx = (FLOAT)x;
+    xform.eDy = (FLOAT)y;
     SetWorldTransform(hdc, &xform);
 
     SelectObject(hdc, Brick_Blue_Pen);
@@ -146,7 +146,7 @@ void Draw_Frame(HDC hdc)
     Draw_Platformer(hdc, 50, 100);*/
     for (size_t i = 0; i < 16; i++)
     {
-        Draw_Brick_Letter(hdc, i);
+        Draw_Brick_Letter(hdc, 20 + i * Brick_Width * Global_Scale, 100, i);
     }
     
 }
