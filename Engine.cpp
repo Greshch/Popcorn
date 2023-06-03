@@ -91,8 +91,11 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step)
 {// Вывод падающнго кирпича
+    double offset;
+    int back_part_offset;
     double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
     int brick_half_height = Brick_Height * Global_Scale / 2;
+    
 
     SetGraphicsMode(hdc, GM_ADVANCED);
     XFORM xform, old_form;
@@ -107,8 +110,9 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step)
 
     SelectObject(hdc, Brick_Red_Pen);
     SelectObject(hdc, Brick_Red_Brush);
-    float offset = 3.0 * (1.0f - fabs(xform.eM22)) * Global_Scale;
-    Rectangle(hdc, 0, -brick_half_height - round(offset), Brick_Width * Global_Scale, brick_half_height - round(offset));
+    offset = 3.0 * (1.0f - fabs(xform.eM22)) * (double) Global_Scale;
+    back_part_offset = (int)round(offset);
+    Rectangle(hdc, 0, -brick_half_height - back_part_offset, Brick_Width * Global_Scale, brick_half_height - back_part_offset);
 
     SelectObject(hdc, Brick_Blue_Pen);
     SelectObject(hdc, Brick_Blue_Brush);
