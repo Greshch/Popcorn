@@ -114,7 +114,7 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type bric
     bool switch_color;
     double offset;
     int back_part_offset;
-    double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
+    double rotation_angle; // преобразование шага-доли от круга в угол поворота
     int brick_half_height = Brick_Height * Global_Scale / 2;
     HPEN front_pen, back_pen;
     HBRUSH front_brush, back_brush;
@@ -124,7 +124,15 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type bric
     if (!(brick_type == EBrick_Type::EBT_Blue || brick_type == EBrick_Type::EBT_Red))
         return; // падающие буквы могут быть только такого типа
 
-    if (rotation_step > 4 && rotation_step < 12)
+    // корректируем шаг вращения и угол поворота
+    rotation_step %= 16;
+
+    if (rotation_step < 8)
+        rotation_angle = 2 * M_PI / 16 * rotation_step;
+    else
+        rotation_angle = 2 * M_PI / 16 * (8L- (long long)rotation_step);
+
+    if (rotation_step > 4 && rotation_step <= 12)
     {
         if (brick_type == EBrick_Type::EBT_Blue)
         {
