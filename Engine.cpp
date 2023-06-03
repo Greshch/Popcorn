@@ -89,8 +89,29 @@ void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
     RoundRect(hdc, x * Global_Scale, y * Global_Scale, (x + Brick_Width) * Global_Scale, (y + Brick_Height) * Global_Scale, 2 * Global_Scale, 2 * Global_Scale);
 }
 //--------------------------------------------------------------------------------------------------------------------
+void Set_Brick_Letters_Color(bool is_switch_color, HPEN& front_pen, HBRUSH& front_brush, HPEN& back_pen, HBRUSH& back_brush)
+{
+    if (is_switch_color)
+    {
+        front_pen = Brick_Red_Pen;
+        front_brush = Brick_Red_Brush;
+
+        back_pen = Brick_Blue_Pen;
+        back_brush = Brick_Blue_Brush;
+    }
+    else
+    {
+        front_pen = Brick_Blue_Pen;
+        front_brush = Brick_Blue_Brush;
+
+        back_pen = Brick_Red_Pen;
+        back_brush = Brick_Red_Brush;
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type brick_type )
 {// Вывод падающнго кирпича
+    bool switch_color;
     double offset;
     int back_part_offset;
     double rotation_angle =  2 * M_PI / 16 * rotation_step; // преобразование шага-доли от круга в угол поворота
@@ -107,40 +128,25 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type bric
     {
         if (brick_type == EBrick_Type::EBT_Blue)
         {
-            front_pen = Brick_Red_Pen;
-            front_brush = Brick_Red_Brush;
-
-            back_pen = Brick_Blue_Pen;
-            back_brush = Brick_Blue_Brush;
+            switch_color = true;
         }
         else
         {
-            front_pen = Brick_Blue_Pen;
-            front_brush = Brick_Blue_Brush;
-
-            back_pen = Brick_Red_Pen;
-            back_brush = Brick_Red_Brush;
+            switch_color = false;
         }
     }
     else
     {
         if (brick_type == EBrick_Type::EBT_Red)
         {
-            front_pen = Brick_Red_Pen;
-            front_brush = Brick_Red_Brush;
-
-            back_pen = Brick_Blue_Pen;
-            back_brush = Brick_Blue_Brush;
+            switch_color = true;
         }
         else
         {
-            front_pen = Brick_Blue_Pen;
-            front_brush = Brick_Blue_Brush;
-
-            back_pen = Brick_Red_Pen;
-            back_brush = Brick_Red_Brush;
+            switch_color = false;
         }
     }
+    Set_Brick_Letters_Color(switch_color, front_pen, front_brush, back_pen, back_brush);
 
     if (rotation_step == 4 || rotation_step == 12)
     {
