@@ -18,6 +18,7 @@ HBRUSH Brick_Red_Brush, Brick_Blue_Brush;
 HPEN Platform_Circle_Pen, Platform_Inner_Pen;
 HBRUSH Platform_Circle_Brush, Platform_Inner_Brush;
 HPEN Platform_Highlight_Pen;
+HPEN Letter_Pen;
 
 enum EBrick_Type // proto 3
 {
@@ -58,6 +59,8 @@ void Init()// настройка игры при старте
     Create_Pen_Brush(0, 128, 192, Platform_Inner_Pen, Platform_Inner_Brush);
 
     Platform_Highlight_Pen = CreatePen(PS_SOLID, 0, RGB(255, 255, 255));
+
+    Letter_Pen = CreatePen(PS_SOLID, Global_Scale, RGB(255, 255, 255));
 }
 //--------------------------------------------------------------------------------------------------------------------
 void Draw_Brick(HDC hdc, int x, int y, EBrick_Type brick_type)
@@ -192,6 +195,10 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type bric
         SelectObject(hdc, front_pen);
         SelectObject(hdc, front_brush);
         Rectangle(hdc, 0, -brick_half_height, Brick_Width * Global_Scale, brick_half_height);
+
+        // буква
+        SelectObject(hdc, Letter_Pen);
+        Ellipse(hdc, 0 + 5 * Global_Scale, (-5 * Global_Scale) / 2, 0 + 10 * Global_Scale, (5 * Global_Scale) / 2);
 
         SetWorldTransform(hdc, &old_form);
     }
