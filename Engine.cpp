@@ -107,11 +107,11 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step)
 
     SelectObject(hdc, Brick_Red_Pen);
     SelectObject(hdc, Brick_Red_Brush);
-    Rectangle(hdc, 0, -brick_half_height - Global_Scale, Brick_Width * Global_Scale, brick_half_height - Global_Scale);
+    float offset = (1.0f - xform.eM22) * Global_Scale;
+    Rectangle(hdc, 0, -brick_half_height - (int)offset, Brick_Width * Global_Scale, brick_half_height - (int)offset);
 
     SelectObject(hdc, Brick_Blue_Pen);
     SelectObject(hdc, Brick_Blue_Brush);
-    float offset = (1.0f - xform.eM22) * Global_Scale;
     Rectangle(hdc, 0, -brick_half_height, Brick_Width * Global_Scale, brick_half_height);
 
     SetWorldTransform(hdc, &old_form);
