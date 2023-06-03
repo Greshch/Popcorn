@@ -20,6 +20,12 @@ HBRUSH Platform_Circle_Brush, Platform_Inner_Brush;
 HPEN Platform_Highlight_Pen;
 HPEN Letter_Pen;
 
+enum ELetter_Type
+{
+    ELT_None,
+    ELT_O
+};
+
 enum EBrick_Type // proto 3
 {
     EBT_None,
@@ -112,7 +118,7 @@ void Set_Brick_Letters_Color(bool is_switch_color, HPEN& front_pen, HBRUSH& fron
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
-void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type brick_type )
+void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, ELetter_Type letter_type, EBrick_Type brick_type )
 {// Вывод падающнго кирпича
     bool switch_color;
     double offset;
@@ -197,9 +203,15 @@ void Draw_Brick_Letter(HDC hdc,int x, int y, int rotation_step, EBrick_Type bric
         Rectangle(hdc, 0, -brick_half_height, Brick_Width * Global_Scale, brick_half_height);
 
         // буква
-        SelectObject(hdc, Letter_Pen);
-        Ellipse(hdc, 0 + 5 * Global_Scale, (-5 * Global_Scale) / 2, 0 + 10 * Global_Scale, (5 * Global_Scale) / 2);
-
+        if (rotation_step > 4 && rotation_step <= 12)
+        {
+            if (letter_type == ELT_O)
+            {
+                SelectObject(hdc, Letter_Pen);
+                Ellipse(hdc, 0 + 5 * Global_Scale, (-5 * Global_Scale) / 2, 0 + 10 * Global_Scale, (5 * Global_Scale) / 2);
+            }
+        }
+        
         SetWorldTransform(hdc, &old_form);
     }
 }
@@ -240,8 +252,8 @@ void Draw_Frame(HDC hdc)
     Draw_Platformer(hdc, 50, 100);*/
     for (size_t i = 0; i < 16; i++)
     {
-        Draw_Brick_Letter(hdc, 20 + i * Brick_Width * Global_Scale, 100, i, EBrick_Type::EBT_Blue);
-        Draw_Brick_Letter(hdc, 20 + i * Brick_Width * Global_Scale, 100 + 30, i, EBrick_Type::EBT_Red);
+        Draw_Brick_Letter(hdc, 20 + i * Brick_Width * Global_Scale, 100, i, ELetter_Type::ELT_O, EBrick_Type::EBT_Blue);
+        Draw_Brick_Letter(hdc, 20 + i * Brick_Width * Global_Scale, 100 + 30, i, ELetter_Type::ELT_O, EBrick_Type::EBT_Red);
     }
     
 }
